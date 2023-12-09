@@ -7,8 +7,10 @@ import com.example.corestudy.member.MemberServiceImpl;
 
 public class MemberApp {
     public static void main(String[] args) {
+        AppConfig appConfig = new AppConfig();
+
         // 멤버 회원 가입
-        MemberService memberService = new MemberServiceImpl();
+        MemberService memberService = appConfig.memberService(); // AppConfig를 통해 생성하고 반환 받음
         Member member = new Member(1L, "memberA", Grade.VIP);
         memberService.join(member);
 
