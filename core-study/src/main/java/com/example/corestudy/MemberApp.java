@@ -4,13 +4,16 @@ import com.example.corestudy.member.Grade;
 import com.example.corestudy.member.Member;
 import com.example.corestudy.member.MemberService;
 import com.example.corestudy.member.MemberServiceImpl;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class MemberApp {
     public static void main(String[] args) {
-        AppConfig appConfig = new AppConfig();
+        // 스프링 컨테이너에서 스프링 빈 호출
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
+        MemberService memberService = applicationContext.getBean("memberService", MemberService.class);
 
         // 멤버 회원 가입
-        MemberService memberService = appConfig.memberService(); // AppConfig를 통해 생성하고 반환 받음
         Member member = new Member(1L, "memberA", Grade.VIP);
         memberService.join(member);
 
