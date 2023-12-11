@@ -1,12 +1,13 @@
 package com.example.corestudy.lifecycle;
 
-public class NetworkClient {
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
+
+public class NetworkClient implements InitializingBean, DisposableBean {
     private String url;
 
-    public NetworkClient(String url) {
+    public NetworkClient() {
         System.out.println("생성자 호출, url = " + url);
-        connect();
-        this.url = url;
     }
 
     public void setUrl(String url) {
@@ -21,7 +22,18 @@ public class NetworkClient {
         System.out.println("call : " + url + " message : " + message);
     }
 
-    public void disconnect() {
+    public void disConnect() {
         System.out.println("close : " + url);
+    }
+
+    @Override
+    public void destroy() throws Exception {
+        disConnect();
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        connect();
+        call("초기화 연결 메시지");
     }
 }
