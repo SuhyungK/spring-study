@@ -74,12 +74,9 @@ public class JpaItemRepositoryV3 implements ItemRepository {
 
     @Override
     public List<Item> findAll(ItemSearchCond cond) {
-        String itemName = cond.getItemName();
-        Integer maxPrice = cond.getMaxPrice();
-
         return query.select(item)
                     .from(item)
-                    .where(likeItemName(itemName), maxPrice(maxPrice))
+                    .where(likeItemName(cond.getItemName()), maxPrice(cond.getMaxPrice()))
                     .fetch();
     }
 

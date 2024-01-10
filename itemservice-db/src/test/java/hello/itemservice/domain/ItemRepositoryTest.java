@@ -6,16 +6,10 @@ import hello.itemservice.repository.ItemUpdateDto;
 import hello.itemservice.repository.memory.MemoryItemRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Commit;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import java.util.List;
 
@@ -60,7 +54,8 @@ class ItemRepositoryTest {
         Item savedItem = itemRepository.save(item);
 
         //then
-        Item findItem = itemRepository.findById(item.getId()).get();
+        Item findItem = itemRepository.findById(item.getId())
+                                      .get();
         assertThat(findItem).isEqualTo(savedItem);
     }
 
@@ -76,7 +71,8 @@ class ItemRepositoryTest {
         itemRepository.update(itemId, updateParam);
 
         //then
-        Item findItem = itemRepository.findById(itemId).get();
+        Item findItem = itemRepository.findById(itemId)
+                                      .get();
         assertThat(findItem.getItemName()).isEqualTo(updateParam.getItemName());
         assertThat(findItem.getPrice()).isEqualTo(updateParam.getPrice());
         assertThat(findItem.getQuantity()).isEqualTo(updateParam.getQuantity());
